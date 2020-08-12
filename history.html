@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SpaceX</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            .card{
+                background-color: transparent;
+                color: white;
+            }
+        </style>
+    </head>
+    <body style="background-image:url(https://wallpaperaccess.com/full/1608.jpg); background-size: cover;">
+        <nav class="nav">
+            <a class="nav-link text-light" href="index.html">Capsules</a>
+            <a class="nav-link text-light" href="home.html">Home</a>
+        </nav>
+
+        <h3 class="display-3 text-light" style="margin-top: 30px;">SpaceX-History</h4><br>
+
+        <div id="results">
+
+        </div>
+
+        <script type="text/javascript">
+            window.onload=function(){
+                var url = "https://api.spacexdata.com/v3/history"
+
+                getRepo(url)
+            }
+
+
+            function getRepo(baseUrl){
+                var xhr=new XMLHttpRequest
+                xhr.open("GET","https://api.spacexdata.com/v3/history?limit=6")
+                xhr.setRequestHeader("Content-type", "application/json; charset=utf-8")
+                xhr.send()
+                xhr.onload=function(){
+                    if(xhr.status===200){
+                        //console.log(xhr.response)
+                        var res=JSON.parse(this.response) 
+                        console.log(res)
+                        showResult(res)
+                    }                  
+                }         
+            }            
+
+            function showResult(res){
+                var divMain = document.getElementById("results")
+                divMain.innerHTML=""
+                divMain.style.margin="20px"
+                divMain.setAttribute("class","card")
+                for(var i=0;i<res.length;i++){
+                    var div=document.createElement("div")
+                    var divBody =document.createElement("div")
+                    divBody.setAttribute("class","card-body")
+                    var divTitle = document.createElement("div")
+                    var title = res[i].title
+                    divTitle.textContent="Title: "+title
+                    divTitle.setAttribute("class","card-title")
+                    var p2 = document.createElement("p")
+                    var date = res[i].event_date_utc
+                    p2.textContent="Date: "+date
+                    var p3 = document.createElement("p")
+                    var details = res[i].details
+                    p3.textContent="Details: "+details
+                    divBody.append(p2,p3)   
+                    div.append(divTitle,divBody)                    
+                    div.setAttribute("class","card")
+                    div.style.margin="5px"
+                    divMain.append(div)
+                    div.style.fontFamily="monospace"
+                }  
+            }
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SpaceX</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body style="background-image:url(https://wallpaperaccess.com/full/1608.jpg); background-size: cover;">
+        <nav class="nav">
+            <a class="nav-link text-light" href="index.html">Capsules</a>
+            <a class="nav-link text-light" href="info.html">Info</a>
+            <a class="nav-link text-light" href="home.html">Home</a>
+        </nav>
+
+        <div id="results">
+
+        </div>
+
+        <script type="text/javascript">
+            window.onload=function(){
+                var url = "https://api.spacexdata.com/v3/info"
+
+                getRepo(url)
+            }
+
+            function getRepo(baseUrl,params){
+                var xhr=new XMLHttpRequest
+                xhr.open("GET","https://api.spacexdata.com/v3/info")
+                xhr.setRequestHeader("Content-type", "application/json; charset=utf-8")
+                xhr.send()
+                xhr.onload=function(){
+                    if(xhr.status===200){
+                        //console.log(xhr.response)
+                        var res=JSON.parse(this.response) 
+                        console.log(res)
+                        showResult(res)
+                    }                  
+                }         
+            }            
+
+            function showResult(res){
+                var div = document.getElementById("results")
+                div.innerHTML=""
+                div.style.margin="10px"
+                div.setAttribute("class","card")
+                var name=res.name
+                var p1=document.createElement("p")
+                p1.append("Name:"+name)
+                var ceo = res.ceo  
+                var p2=document.createElement("p")
+                p2.append("CEO:"+ceo)
+                var coo = res.coo 
+                var p3=document.createElement("p")
+                p3.append("COO:"+coo)
+                var cto = res.cto  
+                var p4=document.createElement("p")
+                p4.append("CTO:"+cto)
+                var employees = res.employees  
+                var p5=document.createElement("p")
+                p5.append(name)
+                var founded = res.founded 
+                var p1=document.createElement("p")
+                p1.append(name)
+                var founder = res.founder  
+                var p1=document.createElement("p")
+                p1.append(name)
+                var summary = res.summary 
+                var p1=document.createElement("p")
+                p1.append(name)
+                var testSites = res.test_cites 
+                var p1=document.createElement("p")
+                p1.append(name)
+                var valuation = res.valuation
+                var p1=document.createElement("p")
+                p1.append(name)
+                var p = document.createElement("p")
+                p.append(p1,p2,p3,p4,p5)
+                div.append(p)
+            }
+
+        </script>
+    </body>
+</html>
